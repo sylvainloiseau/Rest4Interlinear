@@ -1,0 +1,30 @@
+# Installation
+
+Edit the webapp/WEB-INF/web.xml file in the directory of the running 
+instance of basex.
+
+Edit the following entries:
+
+<context-param>
+  <param-name>org.basex.webpath</param-name>
+  <param-value>/Users/sloiseau/Recherche/Corpus/workspace/xq4interlinear/webapp</param-value>
+</context-param>  
+
+<context-param>
+  <param-name>org.basex.restpath</param-name>
+  <param-value>/Users/sloiseau/Recherche/Corpus/workspace/xq4interlinear</param-value>
+</context-param>  
+
+<context-param>
+  <param-name>org.basex.dbpath</param-name>
+  <param-value>/Users/sloiseau/Recherche/Corpus/Corpus/BasexData/data</param-value>
+</context-param>  
+
+OR the corresponding field in {running instance dir}/.basex
+
+In order for the xslt transformation to work, you shoud add the saxon XSLT 
+engine on the CLASSPATH when lauching the basexhttp script:
+CP=$MAIN/BaseX.jar:$MAIN/lib/custom/*:$MAIN/lib/*:$CLASSPATH:/Applications/SaxonHE9-9-1-3J/saxon9he.jar
+
+
+The static files are still in the basex/web-app directory

@@ -1,0 +1,44 @@
+(:~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ : view-words-as-table -- draw a cell for each words of a sentence
+ :
+ : @param the words element (containing the word elements)
+ : @return Q{http://www.w3.org/1999/xhtml}table
+ :)
+declare function page:view-words-as-table
+($words as element(words))
+as element(Q{http://www.w3.org/1999/xhtml}table)
+{
+	<html:table class="words" xmlns:html="http://www.w3.org/1999/xhtml" >	
+	<html:tr>
+	{
+		for $word in $words/word
+		let $form := $word/item[@type='txt' and @lang='tww']/text()
+		let $form_checked :=	if (empty($form)) then "&#160;" else $form
+		let $gloss := $word/item[@type='gls' and @lang='en']/text()
+		let $gloss_checked := if (empty($gloss)) then "&#160;" else $gloss
+		let $pos := $word/item[@type='pos' and @lang='en']/text()
+		let $pos_checked := if (empty($pos)) then "&#160;" else $pos
+		return
+	<html:td style="vertical-align:top">
+	<html:table class="word">
+	<!--
+	<html:tr><html:td><html:i>{ $form_checked } </html:i></html:td></html:tr>
+	<html:tr><html:td> { $gloss_checked }</html:td></html:tr>
+	<html:tr><html:td><html:b>{ $pos_checked }</html:b></html:td></html:tr>
+	-->
+	<html:tr>
+	<html:td>
+	{
+	    
+		if ($word/morphemes) then page:view-morphemes($word/morphemes, fn:false())
+		else if ($word[item[@type="punct"]]) then $word/item[@type="punct"]/text()
+		else "unknown situation"
+	}
+	</html:td>
+	</html:tr>
+	</html:table>
+	</html:td>
+}
+</html:tr>
+</html:table>
+};

@@ -1,0 +1,19 @@
+- Classes : pour les analyses de distribution de morphèmes
+- dans les cellules d'un texte interdire le retour à la ligne
+- pb avec $order
+-- le concordancier des formes sans $order ne marche plus
+-- pb avec le map des fréquence
+- faire l'édition
+- faire l'analyse de mots
+- faire analyse allomorphie
+
+- problème avec les paragraphes vides : <paragraph guid="b4170a04-099b-4c22-bc91-2e0cf10e538d" />
+
+
+Les entrées sans formes dans le tableau des formes :
+<entry dateCreated="2015-06-21T14:29:27Z" dateModified="2015-06-21T14:29:27Z" id="toteia_602e8772-a0e8-4499-a955-7a49a713d4b8" guid="602e8772-a0e8-4499-a955-7a49a713d4b8">
+<trait  name="morph-type" value="stem"/>
+<citation>
+<form lang="tww"><text>toteia</text></form>
+</citation>
+<sense id="01b9abbd-b569-4775-aa32-0f9c98687652">
