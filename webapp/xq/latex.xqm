@@ -1,14 +1,16 @@
-module namespace latex = 'http://basex.org/modules/web-page';
+module namespace latex = 'http://basex.org/modules/web-page-latex';
+import module namespace common = "configuration" at "variable.xqm";
 
 declare variable $latex:open-curly := '&#123;'; (: for { :)
 declare variable $latex:closed-curly := '&#125;'; (: for } :)
 
 (:
-declare variable $latex:tuwariLexicon as xs:string+ external;
-declare variable $latex:tuwariTexts as xs:string+ external;
+declare variable $common:tuwariLexicon as xs:string+ external;
+declare variable $common:tuwariTexts as xs:string+ external;
+declare variable $common:tuwariLexicon := 'Tuwari20200114Lexicon';
+declare variable $common:tuwariTexts := 'Tuwari20200114Interlinear';
 :)
-declare variable $latex:tuwariLexicon := 'Tuwari20200114Lexicon';
-declare variable $latex:tuwariTexts := 'Tuwari20200114Interlinear';
+
 
 (:============================================================================:)
 (: Concordance :)
@@ -24,7 +26,7 @@ declare
   as element(html) {
 	 <html>
 	 {
-	  let $entry := collection($latex:tuwariLexicon)/lift/entry[@id = $entryid]
+	  let $entry := collection($common:tuwariLexicon)/lift/entry[@id = $entryid]
 	  let $form := $entry/lexical-unit/form/text/text()
 	 let $tex := latex:concordance2tex($entryid)
 	 let $filename := concat("kwic_", $form, ".tex")
@@ -45,10 +47,10 @@ declare
   %output:doctype-system("http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd")
   function latex:concordance2tex($entryid as xs:string)
   as item()+ {
-			let $entry := collection($latex:tuwariLexicon)/lift/entry[@id = $entryid]
+			let $entry := collection($common:tuwariLexicon)/lift/entry[@id = $entryid]
 			let $form := $entry/lexical-unit/form/text/text()
 			let $order := if ($entry/@order) then data($entry/@order) else "0"
-			let $sentences := collection($latex:tuwariTexts)/document/interlinear-text/paragraphs/paragraph/phrases/word[words/word[morphemes/morph[item[@type="cf"] = $form]][(morphemes/morph[item[@type="cf"] = $form and not(item[@type="hn"])] or morphemes/morph[item[@type="cf"] = $form and item[@type="hn"] = $order])]]
+			let $sentences := collection($common:tuwariTexts)/document/interlinear-text/paragraphs/paragraph/phrases/word[words/word[morphemes/morph[item[@type="cf"] = $form]][(morphemes/morph[item[@type="cf"] = $form and not(item[@type="hn"])] or morphemes/morph[item[@type="cf"] = $form and item[@type="hn"] = $order])]]
 			let $nsentences := count($sentences)
 			return
   concat(
@@ -83,7 +85,7 @@ declare
   function latex:text2tex($textid as xs:string)
   as item()+ {
 
-	 let $textnode := collection($latex:tuwariTexts)/document/interlinear-text[item[@type = 'title-abbreviation'] = $textid]
+	 let $textnode := collection($common:tuwariTexts)/document/interlinear-text[item[@type = 'title-abbreviation'] = $textid]
 	 let $sentences := $textnode/paragraphs/paragraph/phrases/word
      let $nsentence := count($sentences)
 	 return
@@ -116,7 +118,7 @@ declare
   as element(html) {
 	 <html>
 	 {
-	 let $textnode := collection($latex:tuwariTexts)/document/interlinear-text[item[@type = 'title-abbreviation'] = $textid]
+	 let $textnode := collection($common:tuwariTexts)/document/interlinear-text[item[@type = 'title-abbreviation'] = $textid]
 	 let $phrases := $textnode/paragraphs/paragraph/phrases/word
      let $nphrases := count($phrases)
 	 let $tex := concat(
@@ -164,7 +166,7 @@ declare
 \tableofcontents",
 
 
-	    for $occurrences in collection($latex:tuwariTexts)/document/interlinear-text/paragraphs/paragraph/phrases/word/words/word/morphemes/morph[starts-with(item[@type="gls"], "DEM") or starts-with(item[@type="gls"], "this") or item[@type="msa"] = "dem"]
+	    for $occurrences in collection($common:tuwariTexts)/document/interlinear-text/paragraphs/paragraph/phrases/word/words/word/morphemes/morph[starts-with(item[@type="gls"], "DEM") or starts-with(item[@type="gls"], "this") or item[@type="msa"] = "dem"]
 		let $type := $occurrences/item[@type="cf" and @lang="tww"]/text()
 	    let $order := if ($occurrences/item[@type="hn"]) then ($occurrences/item[@type="hn"]/text()) else ()
 		group by $type, $order
@@ -206,7 +208,7 @@ declare
 {
 	 <html:html xmlns:html="http://www.w3.org/1999/xhtml">
 {
-	 let $phrasenode := collection($latex:tuwariTexts)/document/interlinear-text[item[@type='title-abbreviation'] = $textid]/paragraphs/paragraph/phrases/word[item[@type = 'segnum'] = $phraseid]
+	 let $phrasenode := collection($common:tuwariTexts)/document/interlinear-text[item[@type='title-abbreviation'] = $textid]/paragraphs/paragraph/phrases/word[item[@type = 'segnum'] = $phraseid]
 	 return latex:sentence2texInterlinearXSLT($phrasenode)
 	 }
 	</html:html>
@@ -231,7 +233,7 @@ declare
 <html:html xmlns:html="http://www.w3.org/1999/xhtml">
 <pre>
 {
-    let $phrase := collection($latex:tuwariTexts)/document/interlinear-text[item[@type='title-abbreviation'] = $textid]/paragraphs/paragraph/phrases/word[item[@type = 'segnum'] = $phraseid]
+    let $phrase := collection($common:tuwariTexts)/document/interlinear-text[item[@type='title-abbreviation'] = $textid]/paragraphs/paragraph/phrases/word[item[@type = 'segnum'] = $phraseid]
     let $fields := ("txt", "cf", "hn", "gls")
     let $mysequence := <phrase>{
       for $field in $fields
@@ -288,8 +290,8 @@ declare
 	<html:html xmlns:html="http://www.w3.org/1999/xhtml">
 	<html:body>{
 
-	let $tex := xslt:transform-text(collection($latex:tuwariLexicon)/lift, "file://../xslt/lift2latex.xsl")
-	let $filename := concat($latex:tuwariLexicon, ".tex")
+	let $tex := xslt:transform-text(collection($common:tuwariLexicon)/lift, "file://../xslt/lift2latex.xsl")
+	let $filename := concat($common:tuwariLexicon, ".tex")
 	let $file := file:write-text($filename, $tex)
 	let $exe := proc:execute("xelatex ", $filename)
 	return
@@ -316,7 +318,7 @@ declare
 	<html:body>{
 
 	    let $pdf := string-join(
-		    for $entry in collection($latex:tuwariLexicon)/lift/entry
+		    for $entry in collection($common:tuwariLexicon)/lift/entry
 			let $form := $entry/lexical-unit/form/text
 			let $order := if (data($entry/@order)) then data($entry/@order) else "0"
 			let $morphtype := data($entry/trait/@value)

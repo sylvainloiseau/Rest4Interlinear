@@ -1,2 +1,4 @@
-declare variable $latex:tuwariLexicon := 'Tuwari20191118Lexicon';
-declare variable $latex:tuwariTexts := 'Tuwari20191118Interlinear';
+module namespace common = 'configuration';
+
+declare variable $common:tuwariLexicon := 'lift20200114';
+declare variable $common:tuwariTexts := 'TuwariInterlinear20200114';

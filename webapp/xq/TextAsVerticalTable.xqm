@@ -1,4 +1,8 @@
 
+module namespace vert-page = 'http://basex.org/modules/web-page-vertical';
+
+import module namespace page = "http://basex.org/modules/web-page" at "site.xqm";
+import module namespace common = "configuration" at "variable.xqm";
 
 declare
 %rest:path("ViewTextAsTable/{$id}")
@@ -6,7 +10,7 @@ declare
 %output:omit-xml-declaration("no")
 %output:doctype-public("-//W3C//DTD XHTML 1.0 Transitional//EN")
 %output:doctype-system("http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd")
-function page:view-text-as-table(
+function vert-page:view-text-as-table(
     $id as xs:string
     )
 as element(Q{http://www.w3.org/1999/xhtml}html)
@@ -50,7 +54,7 @@ border: 1px solid #ccc;
           <html:body>
           {
 		  page:make-header(),
-		  let $text := collection($page:tuwariTexts)/document/interlinear-text[item[@type = 'title-abbreviation'] = $id]
+		  let $text := collection($common:tuwariTexts)/document/interlinear-text[item[@type = 'title-abbreviation'] = $id]
 		  return 
 		  <html:div>
 
@@ -81,7 +85,7 @@ border: 1px solid #ccc;
                  <tbody>
                  {
                  for $word in $phrase/words/word
-                 return page:view-word-as-table($word)
+                 return vert-page:view-word-as-table($word)
                  }
                  </tbody>
                  </table>
@@ -97,11 +101,11 @@ border: 1px solid #ccc;
 
 
 
-declare function page:view-word-as-table
+declare function vert-page:view-word-as-table
 ($word as element(words))
 as element(Q{http://www.w3.org/1999/xhtml}tr)
 {
-			if ($word/morphemes) then page:view-morphemes-as-table2($word/morphemes, fn:false())
+			if ($word/morphemes) then vert-page:view-morphemes-as-table2($word/morphemes, fn:false())
 			else if ($word[item[@type="punct"]]) then 
 			<html:tr>$word/item[@type="punct"]/text()</html:tr>
 			else "unknown situation"
@@ -113,7 +117,7 @@ as element(Q{http://www.w3.org/1999/xhtml}tr)
  : @param a table element
  : @return Q{http://www.w3.org/1999/xhtml}tr
  :)
-declare function page:view-morphemes-as-table2($morphemes as element(morphemes), $edit as xs:boolean)
+declare function vert-page:view-morphemes-as-table2($morphemes as element(morphemes), $edit as xs:boolean)
 as element(Q{http://www.w3.org/1999/xhtml}tr)
 {
 		for $morph in $morphemes/morph
