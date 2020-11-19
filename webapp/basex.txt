@@ -1,0 +1,16 @@
+sudo ss -tulpn|grep 1984
+ps auxf|grep 858
+sudo kill -9 858
+
+Paramètre des serveurs :
+BaseXWeb
+
+liens vers les chemins :
+vim .basex 
+
+le contenu du répertoire basex n'est pas lu
+
+
+attention à configuer WEBPATH pour que les fichiers static soient trouvés
+
+à lire : https://docs.basex.org/wiki/Options#WEBPATH
