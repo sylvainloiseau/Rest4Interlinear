@@ -209,7 +209,7 @@ declare
 	 <html:html xmlns:html="http://www.w3.org/1999/xhtml">
 {
 	 let $phrasenode := collection($common:tuwariTexts)/document/interlinear-text[item[@type='title-abbreviation'] = $textid]/paragraphs/paragraph/phrases/word[item[@type = 'segnum'] = $phraseid]
-	 return latex:sentence2texInterlinearXSLT($phrasenode)
+	 return if (empty($phrasenode)) then ("Not found") else (latex:sentence2texInterlinearXSLT($phrasenode))
 	 }
 	</html:html>
 };
