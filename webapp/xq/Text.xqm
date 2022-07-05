@@ -24,9 +24,9 @@ declare
 	<script type="text/javascript" src="{$variable:jquery}"/>
     <script type="text/javascript" src="{$variable:datatable}" />
     <script type="text/javascript" src="{$variable:yadcf}" />
-    <script type="text/javascript" language="javascript" src="/static/js/TextTable.js" />
+    <script type="text/javascript" language="javascript" src="../static/TextTable.js" />
 	<link rel="stylesheet" type="text/css" href="{$variable:jquerycss}" />
-    <link rel="stylesheet" type="text/css" href="/static/css/style.css"/>
+    <link rel="stylesheet" type="text/css" href="../static/style.css"/>
 
 <style>
 	.label &#123;

@@ -25,6 +25,7 @@ import module namespace lexicon = "http://basex.org/modules/lexicon" at "Lexicon
 import module namespace text = "http://basex.org/modules/text" at "Text.xqm";
 import module namespace concordance = "http://basex.org/modules/concordance" at "Concordance.xqm";
 import module namespace interlinear = "http://basex.org/modules/interlinear" at "Interlinear.xqm";
+import module namespace search = "http://basex.org/modules/search" at "Search.xqm";
 
 (:
 declare variable $variable:tuwariLexicon := 'Tuwari20200114Lexicon';
@@ -73,18 +74,18 @@ declare
       <html:li>
 		<html:h3>Corpus</html:h3>
 		<html:ul>
-		<html:li><html:a href="ViewTextsTable">Texts</html:a></html:li>
-		<html:li><html:a href="Words">Analyses by words</html:a></html:li>
-		<html:li><html:a href="Tags">Tags</html:a></html:li>
+		  <html:li><html:a href="ViewTextsTable">Texts</html:a></html:li>
+          <html:li><html:a href="TextSearch">Search in texts</html:a></html:li>
+		  <html:li><html:a href="Words">Analyses by words</html:a></html:li>
+		  <html:li><html:a href="Tags">Tags</html:a></html:li>
 		</html:ul>
-		</html:li>
+	  </html:li>
       <html:li>
       <html:h3>Lexicon</html:h3>
 		<html:ul>
 		<html:li><html:a href="ViewLexiconTable">Whole lexicon list</html:a></html:li>
 		<html:li><html:a href="AllomorphByWord">Allomorph by word</html:a></html:li>
 		<html:li><html:a href="NounsByClasses">Nouns by classes</html:a></html:li>
-      <html:li><html:a href="ViewLexiconEntrySearchEmpty">Search for a lexicon entry</html:a></html:li>
       <html:li><html:a href="ViewAllomorphie">View allomorphs</html:a></html:li>
       <html:li><html:a href="ViewSynonymie">View synonymie</html:a></html:li>
       <html:li><html:a href="ViewPolysemy">View polysemy and homophony</html:a></html:li>
@@ -776,212 +777,6 @@ declare
 		</html:html>
 };
 
-(:============================================================================:)
-(:Search :)
-(:============================================================================:)
-
-declare function page:lexicon-entry-search-form
-($entry as xs:string)
-as element(Q{http://www.w3.org/1999/xhtml}div)
-{
-<html:div  xmlns:html="http://www.w3.org/1999/xhtml">  
-	<html:div xmlns:html="http://www.w3.org/1999/xhtml">
-
-		<html:p>Search form</html:p>
-
-	<html:form method="post" action="ViewLexiconEntrySearch" >
-	<br />
-	<html:p>
-<!--
-	<fieldset>
-	<legend>Search for:</legend>
-	<label for="baseline">Baseline</label>
-	<input type="radio" name="field" value="baseline" id="baseline" checked='checked'/>
-	<label for="morph">Morph</label>
-	<input type="radio" name="field" value="morph" id="morph" />
-	<label for="gloss">Gloss</label>
-	<input type="radio" name="field" value="gloss" id="gloss" />
-	</fieldset>
--->
-	<input type="text" name="entry" size="50" value="{$entry}">
-	</input>
-	<input type="submit" value="Submit">
-	</input>
-	<!--<form action="/action_page.php" />-->
-	</html:p>
-	</html:form>
-	</html:div>
-
-	<html:div xmlns:html="http://www.w3.org/1999/xhtml">
-		<html:p>Search baseline text</html:p>
-	<html:form method="post" action="ViewBaselineTextSearch" >
-	<br />
-	<html:p>
-
-	<fieldset>
-	<legend>Search for:</legend>
-	<label for="baseline">Baseline</label>
-	<input type="radio" name="field" value="baseline" id="baseline" checked='checked'/>
-	<br />
-	<label for="morph">Morph</label>
-	<input type="radio" name="field" value="morph" id="morph" />
-	<br />
-	<label for="gloss">Gloss</label>
-	<input type="radio" name="field" value="gloss" id="gloss" />
-	</fieldset>
-
-	<input type="text" name="searchedstring" size="50" value="{$entry}">
-	</input>
-	<input type="submit" value="Submit">
-	</input>
-	<!--<form action="/action_page.php" />-->
-	</html:p>
-	</html:form>
-	</html:div>
-</html:div> 
-};
-
-(:~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
- : Search for a lexical type
- : @return HTML page
- :)
-declare
-  %rest:path("/ViewBaselineTextSearch")
-  %rest:POST
-  %rest:form-param("entry","{$entry}", "(no message)")
-  %output:method("xml")
-  %output:omit-xml-declaration("no")
-  %output:doctype-public("-//W3C//DTD XHTML 1.0 Transitional//EN")
-  %output:doctype-system("http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd")
-  function page:view-baseline-text-search(
-    $entry as xs:string)
-    as element(Q{http://www.w3.org/1999/xhtml}html)
-{
-	<html:html xmlns:html="http://www.w3.org/1999/xhtml">
-	<html:head>
-   <html:link rel="stylesheet" type="text/css" href="static/style.css"/>
-	</html:head>
-	{ page:make-header() }
-	{ page:lexicon-entry-search-form($entry) }
-	<html:div>
-	 {
-		let $results := collection($variable:tuwariLexicon)/lift/entry[lexical-unit/form/text = $entry]
-		let $nmatch := count($results)
-		return
-		if ($nmatch = 0)
-		then <html:p>No entry found</html:p>
-		else <html:div> <html:p>{$nmatch} entry(ies) found</html:p> {
-			for $result in $results
-			let $id := data($result/@id)
-			let $form := $result/lexical-unit/form/text
-			order by $result/@order
-			return
-			<html:div style="border:solid 1px black; display: block; color:#0000FF; width:300px">
-					<html:input type="hidden" name="entryid" value="{data($result/@id)}" />
-					<html:h3><html:a href="ViewLexiconEntryDetail/{$id}">{ $result/lexical-unit/form/text }<sub>{data($result/@order)}</sub></html:a></html:h3>
-					<html:ul>{
-						for $sense in $result/sense
-						return
-					   <html:li>
-				   	({data($sense/grammatical-info/@value)})
-						{ for $gloss in $sense/gloss
-							return
-							<html:p>{data($gloss/@lang)}.: <html:i>{$gloss/text}</html:i></html:p>
-						}
-						
-						</html:li>
-						}</html:ul>
-			<html:br />
-			</html:div>
-		}
-		</html:div>
-	}
-	</html:div>
-	</html:html>
-};
-
-
-(:~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
- : Search for a lexical type
- : @return HTML page
- :)
-declare
-  %rest:path("/ViewLexiconEntrySearch")
-  %rest:POST
-  %rest:form-param("entry","{$entry}", "(no message)")
-  %output:method("xml")
-  %output:omit-xml-declaration("no")
-  %output:doctype-public("-//W3C//DTD XHTML 1.0 Transitional//EN")
-  %output:doctype-system("http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd")
-  function page:view-lexicon-entry-search(
-    $entry as xs:string)
-    as element(Q{http://www.w3.org/1999/xhtml}html)
-{
-	<html:html xmlns:html="http://www.w3.org/1999/xhtml">
-	<html:head>
-   <html:link rel="stylesheet" type="text/css" href="static/style.css"/>
-	</html:head>
-	{ page:make-header() }
-	{ page:lexicon-entry-search-form($entry) }
-	<html:div>
-	 {
-		let $results := collection($variable:tuwariLexicon)/lift/entry[lexical-unit/form/text = $entry]
-		let $nmatch := count($results)
-		return
-		if ($nmatch = 0)
-		then <html:p>No entry found</html:p>
-		else <html:div> <html:p>{$nmatch} entry(ies) found</html:p> {
-			for $result in $results
-			let $id := data($result/@id)
-			let $form := $result/lexical-unit/form/text
-			order by $result/@order
-			return
-			<html:div style="border:solid 1px black; display: block; color:#0000FF; width:300px">
-					<html:input type="hidden" name="entryid" value="{data($result/@id)}" />
-					<html:h3><html:a href="ViewLexiconEntryDetail/{$id}">{ $result/lexical-unit/form/text }<sub>{data($result/@order)}</sub></html:a></html:h3>
-					<html:ul>{
-						for $sense in $result/sense
-						return
-					   <html:li>
-				   	({data($sense/grammatical-info/@value)})
-						{ for $gloss in $sense/gloss
-							return
-							<html:p>{data($gloss/@lang)}.: <html:i>{$gloss/text}</html:i></html:p>
-						}
-						
-						</html:li>
-						}</html:ul>
-			<html:br />
-			</html:div>
-		}
-		</html:div>
-	}
-	</html:div>
-	</html:html>
-};
-
-(:~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
- : Search for a lexical type (when empty)
- : @return HTML page
- :)
-declare
-  %rest:path("/ViewLexiconEntrySearchEmpty")
-  %output:method("xhtml")
-  %output:omit-xml-declaration("no")
-  %output:doctype-public("-//W3C//DTD XHTML 1.0 Transitional//EN")
-  %output:doctype-system("http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd")
-  function page:view-lexicon-entry-search-empty()
-    as element(Q{http://www.w3.org/1999/xhtml}html)
-{
-	<html:html xmlns:html="http://www.w3.org/1999/xhtml">
-	<html:head>
-   <html:link rel="stylesheet" type="text/css" href="static/style.css"/>
-	</html:head>
-	{ page:make-header() }
-	{ page:lexicon-entry-search-form("") }
-	</html:html>
-};
-
 
 (:============================================================================:)
 (: EDIT :)
@@ -1147,11 +942,5 @@ declare function page:make-datatable-header ($title as xs:string) as element(hea
  :)
 declare function page:display-form ($form as xs:string, $order as xs:string)
 as element(Q{http://www.w3.org/1999/xhtml}a)
-{
-<html:a xmlns:html="http://www.w3.org/1999/xhtml"
-        href="/ViewLexiconEntryDetail/{map:get($lexicon:lexiconFormOrder2id, concat($form, $order)) }">{
-	$form,
-	if ($order != "0") then <html:sub>{$order}</html:sub> else ()
-}</html:a>
-};
+{<html:a xmlns:html="http://www.w3.org/1999/xhtml" href="/ViewLexiconEntryDetail/{map:get($lexicon:lexiconFormOrder2id, concat($form, $order)) }">{$form,if ($order != "0") then <html:sub>{$order}</html:sub> else ()}</html:a>};
 

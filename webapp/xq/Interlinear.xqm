@@ -84,7 +84,7 @@ as element(Q{http://www.w3.org/1999/xhtml}div)
 				<html:td>
 				{ data($gloss/@lang) }
 				:
-				{ $gloss/text() }
+				<span class="free_translation"><em><i>{ $gloss/text() }</i></em></span>
 				</html:td>
 				</html:tr>
 		}
@@ -120,7 +120,7 @@ as element(Q{http://www.w3.org/1999/xhtml}table)
 		{
 			if ($word/morphemes) then interlinear:view-morphemes($word/morphemes, fn:false())
 			else if ($word[item[@type="punct"]]) then $word/item[@type="punct"]/text()
-			else "unknown situation"
+			else string-join($word//text(), "~~")
 		}
 		</html:td>
 	}
@@ -147,8 +147,7 @@ as element(Q{http://www.w3.org/1999/xhtml}table)
 	</html:td>
 	</html:tr>
 	<html:tr>
-	<html:td class="morph_citation">
-	{
+	<html:td class="morph_citation">{
 		for $morph in $morphemes/morph
 		let $form := $morph/item[@type='txt' and @lang='tww']/text()
 		(:TODO : la forme canonique ici doit être mise:)
@@ -156,8 +155,7 @@ as element(Q{http://www.w3.org/1999/xhtml}table)
 		let $cf_or_form := if ($cf) then $cf else $form
 		let $order := if ($morph/item[@type="hn"]/text()) then $morph/item[@type="hn"]/text() else "0"
 		return page:display-form($cf_or_form, $order)
-	}
-	</html:td>
+	}</html:td>
 	</html:tr>
 	<html:tr>
 	<html:td class="morph_gloss">

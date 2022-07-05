@@ -26,7 +26,6 @@ table {
   /*table-layout: fixed;
   border-collapse: collapse;*/
 }
-
 	
 th {
   padding: 0 1em 0em 0;
@@ -166,6 +165,10 @@ p {
   width: 1px;
   border-left: 1px solid #000000;
   height: 100%;
+}
+
+.free_translation {
+  font-size: italic;
 }
 
 .concordance_line {

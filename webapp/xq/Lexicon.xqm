@@ -65,7 +65,7 @@ declare
 	 {
 		<html:html xmlns:html="http://www.w3.org/1999/xhtml">
 		<html:head>
-		<html:link rel="stylesheet" type="text/css" href="/static/css/style.css"/>
+		<html:link rel="stylesheet" type="text/css" href="../static/style.css"/>
 		</html:head>
 		{
 			let $entry := collection($variable:tuwariLexicon)/lift/entry[@id = $entryid]
@@ -165,9 +165,9 @@ declare
 	<script type="text/javascript" src="{$variable:jquery}"/>
     <script type="text/javascript" src="{$variable:datatable}" />
     <script type="text/javascript" src="{$variable:yadcf}" />
-    <script type="text/javascript" language="javascript" src="/static/js/LexiconList.js" />
 	<link rel="stylesheet" type="text/css" href="{$variable:jquerycss}" />
-    <link rel="stylesheet" type="text/css" href="/static/css/style.css"/>
+    <script type="text/javascript" language="javascript" src="../static/LexiconList.js" />
+	<html:link rel="stylesheet" type="text/css" href="../static/style.css"/>
 
 <style>
 	.label &#123;
