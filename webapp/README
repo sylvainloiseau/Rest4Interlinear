@@ -28,3 +28,13 @@ CP=$MAIN/BaseX.jar:$MAIN/lib/custom/*:$MAIN/lib/*:$CLASSPATH:/Applications/Saxon
 
 
 The static files are still in the basex/web-app directory
+
+cp /home/sylvain/Workspace/Rest4Interlinear/webapp/static/js/* /opt/BaseX933/basex/webapp/static/
+cp /home/sylvain/Workspace/Rest4Interlinear/webapp/static/css/* /opt/BaseX933/basex/webapp/static/
+
+# Run
+
+from the home directory containing the .basex file, with:
+
+    bash /opt/BaseX933/basex/bin/basexhttp
+

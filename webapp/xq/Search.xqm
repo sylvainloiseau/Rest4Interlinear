@@ -29,9 +29,9 @@ declare
   as element(Q{http://www.w3.org/1999/xhtml}html) {
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <link rel="stylesheet" type="text/css" href="static/style.css"/>
+    <link rel="stylesheet" type="text/css" href="{$variable:cssdir}/style.css"/>
 	<script type="text/javascript" src="{$variable:jquery}"/>
-    <script type="text/javascript" language="javascript" src="../static/Search.js" />
+    <script type="text/javascript" language="javascript" src="{$variable:jsdir}/Search.js" />
 
   </head>
   { page:make-header() }

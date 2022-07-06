@@ -24,9 +24,9 @@ declare
 	<script type="text/javascript" src="{$variable:jquery}"/>
     <script type="text/javascript" src="{$variable:datatable}" />
     <script type="text/javascript" src="{$variable:yadcf}" />
-    <script type="text/javascript" language="javascript" src="../static/TextTable.js" />
+    <script type="text/javascript" language="javascript" src="{$variable:jsdir}/TextTable.js" />
 	<link rel="stylesheet" type="text/css" href="{$variable:jquerycss}" />
-    <link rel="stylesheet" type="text/css" href="../static/style.css"/>
+    <link rel="stylesheet" type="text/css" href="{$variable:cssdir}/style.css"/>
 
 <style>
 	.label &#123;
@@ -114,7 +114,7 @@ collection($variable:tuwariTexts)/document/interlinear-text[item[@type = 'title-
 		return (
 			<html:head>
 			<html:title>Text</html:title>
-			<html:link rel="stylesheet" type="text/css" href="../static/style.css"/>
+			<html:link rel="stylesheet" type="text/css" href="{$variable:cssdir}/style.css"/>
 			<html:style>
 			table &#123;
 				table-layout:fixed;

@@ -2,7 +2,7 @@
 module namespace vert-page = 'http://basex.org/modules/web-page-vertical';
 
 import module namespace page = "http://basex.org/modules/web-page" at "site.xqm";
-import module namespace common = "configuration" at "variable.xqm";
+import module namespace variable = "configuration" at "variable.xqm";
 
 declare
 %rest:path("ViewTextAsTable/{$id}")
@@ -18,17 +18,18 @@ as element(Q{http://www.w3.org/1999/xhtml}html)
   <html:html xmlns:html="http://www.w3.org/1999/xhtml">
           <html:head>
 
-          <script type="text/javascript" language="javascript" src="static/DataTables/datatables.js"> </script>
-          <script type="text/javascript" language="javascript" src="static/yadcf-0.9.2/jquery.dataTables.yadcf.js"> </script>
 
-          <link rel="stylesheet" type="text/css" href="static/jquery.dataTables.min.css"/>
-          <link rel="stylesheet" type="text/css" href="static/style.css"/>
-          <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.11/css/jquery.dataTables.min.css"/>
+    <script type="text/javascript" language="javascript" src="{$variable:jsdir}/DataTables/datatables.js"> </script>
+    <script type="text/javascript" language="javascript" src="{$variable:jsdir}/yadcf-0.9.2/jquery.dataTables.yadcf.js"> </script>
 
-          <script type="text/javascript" language="javascript" src="static/SentenceTable.js" />
+    <link rel="stylesheet" type="text/css" href="{$variable:cssdir}/jquery.dataTables.min.css"/>
+    <link rel="stylesheet" type="text/css" href="{$variable:cssdir}/style.css"/>
+    <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.11/css/jquery.dataTables.min.css"/>
+          <script type="text/javascript" language="javascript" src="{$variable:jsdir}/SentenceTable.js" />
+
 
           <html:title>Text</html:title>
-          <html:link rel="stylesheet" type="text/css" href="../static/style.css"/>
+          <html:link rel="stylesheet" type="text/css" href="{$variable:cssdir}/style.css"/>
           <html:style>
           table &#123;
           table-layout:fixed;
@@ -54,7 +55,7 @@ border: 1px solid #ccc;
           <html:body>
           {
 		  page:make-header(),
-		  let $text := collection($common:tuwariTexts)/document/interlinear-text[item[@type = 'title-abbreviation'] = $id]
+		  let $text := collection($variable:tuwariTexts)/document/interlinear-text[item[@type = 'title-abbreviation'] = $id]
 		  return 
 		  <html:div>
 

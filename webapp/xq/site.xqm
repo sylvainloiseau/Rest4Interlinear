@@ -63,7 +63,7 @@ declare
   <html:html xmlns:html="http://www.w3.org/1999/xhtml">
     <html:head>
       <html:title>Lexicon</html:title>
-      <html:link rel="stylesheet" type="text/css" href="/static/css/style.css"/>
+      <html:link rel="stylesheet" type="text/css" href="{$variable:cssdir}/style.css"/>
     </html:head>
     <html:body>
 	{
@@ -237,11 +237,11 @@ declare
 
 	<head>
 	<title>Nouns by classes</title>
-    <script type="text/javascript" language="javascript" src="static/DataTables/datatables.js"> </script>
-    <script type="text/javascript" language="javascript" src="static/yadcf-0.9.2/jquery.dataTables.yadcf.js"> </script>
+    <script type="text/javascript" language="javascript" src="{$variable:jsdir}/DataTables/datatables.js"> </script>
+    <script type="text/javascript" language="javascript" src="{$variable:jsdir}/yadcf-0.9.2/jquery.dataTables.yadcf.js"> </script>
 
-    <link rel="stylesheet" type="text/css" href="static/jquery.dataTables.min.css"/>
-    <link rel="stylesheet" type="text/css" href="static/style.css"/>
+    <link rel="stylesheet" type="text/css" href="{$variable:cssdir}/jquery.dataTables.min.css"/>
+    <link rel="stylesheet" type="text/css" href="{$variable:cssdir}/style.css"/>
     <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.11/css/jquery.dataTables.min.css"/>
 
     <script type="text/javascript" language="javascript" src="static/AllomorphList.js" />
@@ -317,10 +317,10 @@ declare
 
 	<head>
 	<title>Nouns by classes</title>
-    <script type="text/javascript" language="javascript" src="static/DataTables/datatables.js"> </script>
-    <script type="text/javascript" language="javascript" src="static/yadcf-0.9.2/jquery.dataTables.yadcf.js"> </script>
-    <link rel="stylesheet" type="text/css" href="static/jquery.dataTables.min.css"/>
-    <link rel="stylesheet" type="text/css" href="static/style.css"/>
+    <script type="text/javascript" language="javascript" src="{$variable:jsdir}/DataTables/datatables.js"> </script>
+    <script type="text/javascript" language="javascript" src="{$variable:jsdir}/yadcf-0.9.2/jquery.dataTables.yadcf.js"> </script>
+    <link rel="stylesheet" type="text/css" href="{$variable:cssdir}/jquery.dataTables.min.css"/>
+    <link rel="stylesheet" type="text/css" href="{$variable:cssdir}/style.css"/>
     <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.11/css/jquery.dataTables.min.css"/>
 
 </head>
@@ -418,7 +418,7 @@ declare
 	<html:html xmlns:html="http://www.w3.org/1999/xhtml">
 	<html:head>
 	  <html:title>Allomorphy</html:title>
-   <html:link rel="stylesheet" type="text/css" href="static/style.css"/>
+    <html:link rel="stylesheet" type="text/css" href="{$variable:cssdir}/style.css"/>
 	</html:head>
 	<html:body>
 	{
@@ -461,7 +461,7 @@ declare
 {
 	<html:html xmlns:html="http://www.w3.org/1999/xhtml">
 	<html:head>
-   <html:link rel="stylesheet" type="text/css" href="static/style.css"/>
+    <html:link rel="stylesheet" type="text/css" href="{$variable:cssdir}/style.css"/>
 	  <html:title>Synonymy</html:title>
 	</html:head>
 	<html:body>
@@ -742,7 +742,7 @@ declare
 	 {
 		<html:html xmlns:html="http://www.w3.org/1999/xhtml">
 		<html:head>
-		<html:link rel="stylesheet" type="text/css" href="../static/style.css"/>
+		<html:link rel="stylesheet" type="text/css" href="{$variable:cssdir}/style.css"/>
 		</html:head>
 		{
 			let $form := fn:tokenize($formpos, "-")[1]
