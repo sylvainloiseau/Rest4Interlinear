@@ -66,6 +66,7 @@ declare
 		<html:html xmlns:html="http://www.w3.org/1999/xhtml">
 		<html:head>
 		<html:link rel="stylesheet" type="text/css" href="{$variable:cssdir}/style.css"/>
+		<html:title>Lexicon entry: {collection($variable:tuwariLexicon)/lift/entry[@id = $entryid]/lexical-unit/form/text/text()}</html:title>
 		</html:head>
 		{
 			let $entry := collection($variable:tuwariLexicon)/lift/entry[@id = $entryid]

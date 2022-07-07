@@ -113,7 +113,7 @@ declare
 collection($variable:tuwariTexts)/document/interlinear-text[item[@type = 'title-abbreviation'] = $id]
 		return (
 			<html:head>
-			<html:title>Text</html:title>
+			<html:title>Text: {$id}, {$text/item[@type = 'title']}</html:title>
 			<html:link rel="stylesheet" type="text/css" href="{$variable:cssdir}/style.css"/>
 			<html:style>
 			table &#123;
