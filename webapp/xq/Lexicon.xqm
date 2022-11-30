@@ -136,6 +136,7 @@ declare
 				  	<html:a href="/concordance2pdf/{$entryid}">PDF</html:a>
 				  	<html:a href="/concordance2tex/{$entryid}">Tex</html:a>
 				</html:p>
+				<html:p>See in <html:a href="/TextSearch">search form</html:a></html:p>
 				{
 					concordance:view-concordance($form, $order, 5, 5)
 				}

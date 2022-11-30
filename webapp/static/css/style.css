@@ -32,7 +32,7 @@ th {
 }
 
 td {
-  padding: 0 1em 0 0;
+  padding: 0 0 0 0;
   vertical-align: top;
   border: 0;
 }
@@ -167,29 +167,123 @@ p {
   height: 100%;
 }
 
-.free_translation {
-  font-size: italic;
+.free_translations {
+  border: 0px;
+  margin: 0px;
+  padding: 0px;
+  font-style: italic;
 }
 
-.concordance_line {
-	border-collapse: collapse;
-    border: 1px solid black;
-    border: solid thin;
+.free_translation td {
+  border: 0px;
+  margin: 0px;
+  padding: 0px;
+  font-style: italic;
 }
 
-.concordance_reference {
-	border-right: solid thin;
+.concordance {
+    border: 0px;
+    margin: 0px;
+    padding: 0px;
 }
 
-.concordance_left_context {
-	border-right: solid thin;
+.conc_line {
+  border: 0px solid thin black;
+  margin: 0px;
+  padding: 0px;
 }
 
-.concordance_keyword {
-	border-right: solid thin;
+/* pb here */
+.conc_line_content tr {
+  border: 0px;
+  margin: 0px;
+  padding: 0px;
 }
 
-.concordance_right_context {
-	border-right: solid thin;
+.conc_line_content {
+  border: 0px;
+  margin: 0px;
+  padding: 0px;
 }
 
+.conc_ref {
+	border-right: 1px solid thin black;
+  margin: 0px;
+}
+
+.conc_left {
+  border: 0px;
+  margin: 0px;
+  padding: 0px;
+}
+
+.conc_right {
+  border: 0px;
+  margin: 0px;
+  padding: 0px;
+}
+
+.conc_keyword {
+  border: 1px thin solid black;
+  margin: 0px;
+  padding: 0px;
+}
+
+.conc_keyword table tr td table tr td {
+  font-weight: bold;
+}
+
+/* pb here */
+
+.gram {
+  font-variant-caps: small-caps;
+  font-variant: small-caps;
+}
+
+/*
+.lex {
+
+}
+*/
+
+.interlinear_words tr {
+    border: 0px;
+    margin: 0px;
+    padding: 0px;
+}
+
+.interlinear_words {
+    border: 0px;
+    margin: 0px;
+    padding: 0px;
+}
+
+.interlinear_word {
+    border: 0px;
+    margin: 0px;
+    padding: 0px;
+}
+
+.interlinear_morphemes {
+    border: 0px;
+    margin: 0px;
+    padding: 0px;
+}
+
+.morph_txt {
+    border: 0px;
+    margin: 0px;
+    padding: 0px;
+}
+
+.morph_cf {
+    border: 0px;
+    margin: 0px;
+    padding: 0px;
+}
+
+.morph_gloss {
+    border: 0px;
+    margin: 0px;
+    padding: 0px;
+}
