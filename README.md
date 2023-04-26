@@ -1,8 +1,8 @@
 Browse interlinear glossed text corpus (in Emeld XML format) and associated lexical data (in Lift XML format).
 
-- The [Emeld vocabulary](https://www.researchgate.net/publication/244446092_Towards_a_general_model_of_interlinear_text) represent interlinear glossed texts. It can be produced by [SIL Fiedlworks](https://software.sil.org/fieldworks/download/) or [Elan](https://archive.mpi.nl/tla/elan).
+- The [Emeld vocabulary](https://www.researchgate.net/publication/244446092_Towards_a_general_model_of_interlinear_text) represents interlinear glossed texts. It can be produced by [SIL Fiedlworks](https://software.sil.org/fieldworks/download/) or [Elan](https://archive.mpi.nl/tla/elan).
   - See : Cathy Bow, Baden Hughes, Steven Bird, (2003) "Towards a general model of interlinear text", Proceedings of Emeld workshop 2003.
-- The [Lift (Lexical Interchange Format Standard) vocabulary](https://code.google.com/archive/p/lift-standard/). It is also an export format of SIL Fiedlworks and Elan.
+- The [Lift (Lexical Interchange Format Standard) vocabulary](https://code.google.com/archive/p/lift-standard/) is also an export format of SIL Fiedlworks and Elan.
 
 The display is defined in XQuery files and can be very easily adapted to specific needs.
 
@@ -24,7 +24,7 @@ The display is defined in XQuery files and can be very easily adapted to specifi
 - run bin/basexhttp from the directory containing your `.basex` file
 - open a browser and go to [http://localhost:8984/Index](http://localhost:8984/Index)
 
-# Sample
+# Screenshots
 
 ## List of texts
 
