@@ -132,6 +132,7 @@ declare
 				<!--				{map:get($page:entry2frequency, [$entry/lexical-unit/form/text, data($entry/@order)])}-->
 
 				<html:h3>Concordance</html:h3>
+				<!--<p>(Other concordance : <html:a href="/concordance2pdf/{$entryid}">by left and right context</html:a>)</p>-->
 				<html:p>
 				  	<html:a href="/concordance2pdf/{$entryid}">PDF</html:a>
 				  	<html:a href="/concordance2tex/{$entryid}">Tex</html:a>
