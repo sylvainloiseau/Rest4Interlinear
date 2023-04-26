@@ -198,11 +198,11 @@ declare
 	 <body>
 
 	 	<div xmlns:html="http://www.w3.org/1999/xhtml">
-	 	<a href="http://localhost:8984/Tuwari">Home</a>
+	 	<a href="http://localhost:8984/Index">Home</a>
 	 	<hr />
 	 	</div>	 
 
-	<h3>Tuwari lexicon</h3>
+	<h3>Lexicon</h3>
 
 	<p>
 		{

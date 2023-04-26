@@ -20,5 +20,5 @@ Browse interlinear glossed text corpus (in Emeld XML format) and associated lexi
 # Run
 
 - run bin/basexhttp from the directory containing your `.basex` file
-- open a browser and go to [http://localhost:8984/Tuwari](http://localhost:8984/Tuwari)
+- open a browser and go to [http://localhost:8984/Index](http://localhost:8984/Index)
 

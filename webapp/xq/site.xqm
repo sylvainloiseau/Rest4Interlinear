@@ -19,12 +19,6 @@ import module namespace concordance = "http://basex.org/modules/concordance" at 
 import module namespace interlinear = "http://basex.org/modules/interlinear" at "Interlinear.xqm";
 import module namespace search = "http://basex.org/modules/search" at "Search.xqm";
 
-(:
-declare variable $variable:LexiconDataBaseName := 'Tuwari20200114Lexicon';
-declare variable $variable:TextsDataBaseName := 'Tuwari20200114Interlinear';
-:)
-
-
 declare variable $page:text2size := map:merge(
 	for $entry in collection($variable:TextsDataBaseName)/document/interlinear-text
  	return map:entry (
@@ -242,7 +236,7 @@ declare
 	 <body>
 
 	 	<div xmlns:html="http://www.w3.org/1999/xhtml">
-	 	<a href="http://localhost:8984/Tuwari">Home</a>
+	 	<a href="http://localhost:8984/Index">Home</a>
 	 	<hr />
 	 	</div>
 		<ul>
@@ -320,7 +314,7 @@ declare
 	 <body>
 
 	 	<div xmlns:html="http://www.w3.org/1999/xhtml">
-	 	<a href="http://localhost:8984/Tuwari">Home</a>
+	 	<a href="http://localhost:8984/Index">Home</a>
 	 	<hr />
 	 	</div>
 		<div>
@@ -672,7 +666,7 @@ declare
 		let $nprefix := count(collection($variable:LexiconDataBaseName)/lift/entry[trait[@name="morph-type"]/@value = "prefix"])
 		return
 <html:div>
-    <html:h2>Tuwari documentation: statistics</html:h2>
+    <html:h2>Statistics</html:h2>
     <html:h3>Corpus</html:h3>
 	<html:ul>
 	  <html:li>{$ntexts} texts</html:li>
@@ -821,14 +815,14 @@ as xs:boolean {
 
 declare function page:make-header-html () as element(div) {
 	<div>
-	<a href="http://localhost:8984/Tuwari">Home</a>
+	<a href="http://localhost:8984/Index">Home</a>
 	<hr />
 	</div>
 };
 
 declare function page:make-header () as element(Q{http://www.w3.org/1999/xhtml}div) {
 	<html:div xmlns:html="http://www.w3.org/1999/xhtml">
-	<html:a href="http://localhost:8984/Tuwari">Home</html:a>
+	<html:a href="http://localhost:8984/Index">Home</html:a>
 	<html:hr />
 	</html:div>
 };

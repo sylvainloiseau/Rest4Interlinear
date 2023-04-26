@@ -339,7 +339,7 @@ declare
 				))
 	    )
 		(: sortie dans le répertoire BaseX :)
-			let $filename := "TuwariDictionary.tex"
+			let $filename := "Dictionary.tex"
 			let $file := file:write-text($filename, $pdf)
 			return <html:a href="{$filename}">document</html:a>
     }
