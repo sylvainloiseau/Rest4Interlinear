@@ -35,6 +35,9 @@ td {
   padding: 0 0 0 0;
   vertical-align: top;
   border: 0;
+  height: 20px;
+  vertical-align: top;
+  white-space: nowrap;
 }
 
 /* 

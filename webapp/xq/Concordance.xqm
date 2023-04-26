@@ -134,6 +134,12 @@ declare
 						<html:table class="conc_line_content">
 						<html:tr>
                         <html:td class="conc_left"> {
+								if ($left_context_size = -1)
+								then interlinear:view-words(
+                                  <words>
+								  {$left_context}
+                                  </words>
+								) else
 	            				interlinear:view-words(
 									<words> {
 	            			          for $index in (1 to $left_context_size)
@@ -147,6 +153,12 @@ declare
 	            		    interlinear:view-words(<words>{$parent_word}</words>)
 	            	 	} </html:td>
                         <html:td class="conc_right"> {
+								if ($right_context_size = -1)
+								then interlinear:view-words(
+                                  <words>
+								  {$right_context}
+                                  </words>
+								) else
 								interlinear:view-words(
 									<words> {
 	            		            for $i in (1 to $right_context_size)
@@ -208,4 +220,19 @@ declare
 				item[@type="cf"] = $lexem and (not(item[@type="hn"]) or item[@type="hn"] = $homonym_index )
 	]
 	return concordance:concordance-for-morphs($morphs, $left_context_size, $right_context_size)
+};
+
+(:~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ : Display a concordance
+ : @return HTML table
+ :)
+declare
+  function concordance:view-concordance-sentences(
+  	    $lexem as xs:string,
+		$homonym_index as xs:string
+  ) as element(Q{http://www.w3.org/1999/xhtml}table) {
+	let $morphs := collection($variable:tuwariTexts)/document/interlinear-text/paragraphs/paragraph/phrases/word/words/word/morphemes/morph[
+				item[@type="cf"] = $lexem and (not(item[@type="hn"]) or item[@type="hn"] = $homonym_index )
+	]
+	return concordance:concordance-for-morphs($morphs, -1, -1)
 };
