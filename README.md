@@ -14,11 +14,11 @@ Browse interlinear glossed text corpus (in Emeld XML format) and associated lexi
 - Install BaseX
 - In BaseX, create a database from an Emeld document, containg the interlinear texts, and a database from a Lift document, containing the dictionary
 - Checkout this repository
-- Create a file ".basex" (see the example in basex.sample), for instance in your home directory
-- edit the variables $common:LexiconDataBaseName and $common:TextsDataBaseName in webapp/xq/variable.xqm in order to point the intended basex databases.
+- Create a file `.basex` (see the example in `basex.sample`), for instance in your home directory
+- edit the variables `$common:LexiconDataBaseName` and `$common:TextsDataBaseName` in `webapp/xq/variable.xqm` in order to point the intended basex databases.
 
 # Run
 
-- run bin/basexhttp from the directory containing your .basex file
+- run bin/basexhttp from the directory containing your `.basex` file
 - open a browser and go to [http://localhost:8984/Tuwari](http://localhost:8984/Tuwari)
 
