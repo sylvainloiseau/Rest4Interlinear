@@ -14,3 +14,28 @@ le contenu du répertoire basex n'est pas lu
 attention à configuer WEBPATH pour que les fichiers static soient trouvés
 
 à lire : https://docs.basex.org/wiki/Options#WEBPATH
+
+Positionner System.getProperty("org.basex.path") vers le lieu du dir 
+webapp/
+webapp contains xq, etc.
+
+To be set to {user_home}/.igtviewer/
+
+where {user_home} =
+System.getProperty("user.home")
++ (cf basex org.basex.util.Prop.java) :
+
+      final String home = WIN ? null : System.getenv("HOME");
+      homedir = dir(home != null ? home : System.getProperty("user.home")) + PROJECT;
+
++ (cf basex org.basex.util.Prop.java) :
+  private static String dir(final String path) {
+    return path.isEmpty() || Strings.endsWith(path, '/') || Strings.endsWith(path, '\\') ?
+      path : path + File.separator;
+  }
+
+Source de config :
+./webapp # -> trouvé par le script de lancement à partir de la 
+localisation du script
+~/.basex ?
+basex/ Créé par défaut au lancement du serveur BaseXHTTP par RestIGTDesktop

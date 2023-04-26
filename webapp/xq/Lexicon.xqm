@@ -138,7 +138,7 @@ declare
 				</html:p>
 				<html:p>See in <html:a href="/TextSearch">search form</html:a></html:p>
 				{
-					concordance:view-concordance($form, $order, 5, 5)
+					concordance:view-concordance-sentences($form, $order)
 				}
 
 			</html:body>

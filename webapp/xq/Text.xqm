@@ -129,11 +129,9 @@ collection($variable:tuwariTexts)/document/interlinear-text[item[@type = 'title-
 			{
 				page:make-header()
 			}
-			
 			<html:h2>{$text/item[@type='title']/text()}</html:h2>
 			<html:a href="/text2pdf/{$id}">pdf</html:a>
 			<html:a href="/text2tex/{$id}">tex</html:a>
-			
 			{	
 				interlinear:view-paragraphs($text/paragraphs)
 				}
