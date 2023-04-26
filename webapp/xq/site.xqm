@@ -1,13 +1,5 @@
-
-(: TODO 
-- map for pos abreviation
-- complex form
-- lexical relation
-- allomorph and variant
-- slot
-:)
-
 (:-
+ : Rest4IGT
  :
  : This XQuery module display XML interlinear glossed texts in EMELD XML 
  : format and associated dictionary in LIFT XML format.
@@ -28,20 +20,20 @@ import module namespace interlinear = "http://basex.org/modules/interlinear" at 
 import module namespace search = "http://basex.org/modules/search" at "Search.xqm";
 
 (:
-declare variable $variable:tuwariLexicon := 'Tuwari20200114Lexicon';
-declare variable $variable:tuwariTexts := 'Tuwari20200114Interlinear';
+declare variable $variable:LexiconDataBaseName := 'Tuwari20200114Lexicon';
+declare variable $variable:TextsDataBaseName := 'Tuwari20200114Interlinear';
 :)
 
 
 declare variable $page:text2size := map:merge(
-	for $entry in collection($variable:tuwariTexts)/document/interlinear-text
+	for $entry in collection($variable:TextsDataBaseName)/document/interlinear-text
  	return map:entry (
 		data($entry/@guid),
 		count($entry//morph)
 	)
 );
 
-declare variable $page:pos := distinct-values(collection($variable:tuwariLexicon)/lift/entry/sense/grammatical-info/@value);
+declare variable $page:pos := distinct-values(collection($variable:LexiconDataBaseName)/lift/entry/sense/grammatical-info/@value);
 
 (:============================================================================:)
 (: Home page :)
@@ -52,7 +44,7 @@ declare variable $page:pos := distinct-values(collection($variable:tuwariLexicon
  : @return HTML page
  :)
 declare
-  %rest:path("Tuwari")
+  %rest:path("Index")
   %output:method("xml")
   %output:omit-xml-declaration("no")
   %output:doctype-public("-//W3C//DTD XHTML 1.0 Transitional//EN")
@@ -62,14 +54,14 @@ declare
 {
   <html:html xmlns:html="http://www.w3.org/1999/xhtml">
     <html:head>
-      <html:title>Lexicon</html:title>
+      <html:title>Corpus index</html:title>
       <html:link rel="stylesheet" type="text/css" href="{$variable:cssdir}/style.css"/>
     </html:head>
     <html:body>
 	{
 		page:make-header()
 	}
-	<html:h1>Tuwari language (tww) corpus and lexicon</html:h1>
+	<html:h1>{$variable:title}</html:h1>
 	<html:ul>
       <html:li>
 		<html:h3>Corpus</html:h3>
@@ -118,7 +110,7 @@ declare
   <html>
 	{page:make-datatable-header("Tags")}
   {
-	let $alltags := collection($variable:tuwariTexts)/document/interlinear-text/paragraphs/paragraph/phrases/word/item[@type="note"]
+	let $alltags := collection($variable:TextsDataBaseName)/document/interlinear-text/paragraphs/paragraph/phrases/word/item[@type="note"]
 	return 
     <body>
 	 { page:make-header-html() }
@@ -176,7 +168,7 @@ declare
   <html>
 	{page:make-datatable-header("Words")}
   {
-	let $allwords := collection($variable:tuwariTexts)/document/interlinear-text/paragraphs/paragraph/phrases/word/words/word
+	let $allwords := collection($variable:TextsDataBaseName)/document/interlinear-text/paragraphs/paragraph/phrases/word/words/word
 	let $nallwords := count($allwords)
 	let $nwordforms := count(fn:distinct-values($allwords ! concat(./item[@type='txt' and  @lang='tww']/text(), ./item[@type='pos' and @lang='en']/text())))
 	return 
@@ -254,9 +246,9 @@ declare
 	 	<hr />
 	 	</div>
 		<ul>
-		<li>Total number of forms: {count(collection($variable:tuwariLexicon)/lift/entry)}</li>
-		<li>Total number of forms having allomorph: {count(collection($variable:tuwariLexicon)/lift/entry[variant])}</li>
-		<li>Total number of allomorph: {count(collection($variable:tuwariLexicon)/lift/entry/variant)}</li>
+		<li>Total number of forms: {count(collection($variable:LexiconDataBaseName)/lift/entry)}</li>
+		<li>Total number of forms having allomorph: {count(collection($variable:LexiconDataBaseName)/lift/entry[variant])}</li>
+		<li>Total number of allomorph: {count(collection($variable:LexiconDataBaseName)/lift/entry/variant)}</li>
 		</ul>
 		<div>
 			 <table id="table" class="display">
@@ -271,7 +263,7 @@ declare
 		</thead>
 		<tbody>
 		{
-	for $word in collection($variable:tuwariLexicon)/lift/entry[variant]
+	for $word in collection($variable:LexiconDataBaseName)/lift/entry[variant]
     let $form := $word/lexical-unit/form/text/text()
 	let $order := if (data($word/@order)) then data($word/@order) else "0"
 	order by $word/lexical-unit/form/text/text()
@@ -333,13 +325,13 @@ declare
 	 	</div>
 		<div>
 		{		
-	let $classes := distinct-values(data(collection($variable:tuwariLexicon)/lift/entry/sense[grammatical-info/@value = 'Noun' and grammatical-info/trait/@name = "Noun-infl-class"]/grammatical-info/trait[@name = "Noun-infl-class"]/@value))
+	let $classes := distinct-values(data(collection($variable:LexiconDataBaseName)/lift/entry/sense[grammatical-info/@value = 'Noun' and grammatical-info/trait/@name = "Noun-infl-class"]/grammatical-info/trait[@name = "Noun-infl-class"]/@value))
 	return
 	<div>
 	<p>Number of classes: {count($classes)}</p>
 	{
 		for $class in $classes
-		let $nouns := collection($variable:tuwariLexicon)/lift/entry[sense/grammatical-info/@value = 'Noun' and data(sense/grammatical-info/trait[@name = "Noun-infl-class"]/@value) = $class]
+		let $nouns := collection($variable:LexiconDataBaseName)/lift/entry[sense/grammatical-info/@value = 'Noun' and data(sense/grammatical-info/trait[@name = "Noun-infl-class"]/@value) = $class]
 		order by $class
 	return 
 	<div>
@@ -425,7 +417,7 @@ declare
 			page:make-header()
 	}
 	{
-		let $entries := collection($variable:tuwariLexicon)/lift/entry
+		let $entries := collection($variable:LexiconDataBaseName)/lift/entry
 		for $entry in $entries
 		let $form := $entry/lexical-unit/form/text/text()
 		where $entry/variant
@@ -469,9 +461,9 @@ declare
 			page:make-header()
 	}
 	{
-			for $senses in collection($variable:tuwariLexicon)/lift/entry/sense
+			for $senses in collection($variable:LexiconDataBaseName)/lift/entry/sense
 			group by $gloss := $senses/gloss[@lang="en"]/text/text()
-			let $group_size := count(collection($variable:tuwariLexicon)/lift/entry/sense/gloss[@lang="en" and text/text() = $gloss])
+			let $group_size := count(collection($variable:LexiconDataBaseName)/lift/entry/sense/gloss[@lang="en" and text/text() = $gloss])
 			order by $group_size descending
 			where $group_size > 1
 			return
@@ -515,7 +507,7 @@ declare
 	{
 	
     let $homophoneous := map:merge(
-    for $entry in collection($variable:tuwariLexicon)/lift/entry
+    for $entry in collection($variable:LexiconDataBaseName)/lift/entry
     let $form := $entry/lexical-unit/form/text/text()
       return map:entry(
         if ($form) then $form else "(Missing)",
@@ -614,15 +606,15 @@ return
 (:for $e in $homophoneous2freq($entry) return data($e):)
 
 (:	let $homophoneous2freq := map:merge(
-	  for $entry in distinct-values(collection($variable:tuwariLexicon)/lift/entry/lexical-unit/form/text/text())
+	  for $entry in distinct-values(collection($variable:LexiconDataBaseName)/lift/entry/lexical-unit/form/text/text())
 	  return map:entry(
 	  	  $entry,
-		  count(collection($variable:tuwariLexicon)/lift/entry[lexical-unit/form/text/text() = $entry])
+		  count(collection($variable:LexiconDataBaseName)/lift/entry[lexical-unit/form/text/text() = $entry])
 	  )
     )
 :)
 (:
-			for $entry in collection($variable:tuwariLexicon)/lift/entry
+			for $entry in collection($variable:LexiconDataBaseName)/lift/entry
             let $map := map { 'foo': 42, 'bar': 'baz', 123: 456 }
 			let $form := $entry/lexical-unit/form/text/text()
 			let $nsense := count($entry/sense)
@@ -671,13 +663,13 @@ declare
 			page:make-header()
 	}
 	{
-	    let $ntexts := count(collection($variable:tuwariTexts)/document/interlinear-text)
-	    let $nmorphems := count(collection($variable:tuwariTexts)/document/interlinear-text/paragraphs/paragraph/phrases/word/words/word/morphemes/morph)
-		let $nwords := count(collection($variable:tuwariTexts)/document/interlinear-text/paragraphs/paragraph/phrases/word/words/word)
-		let $nlexem := count(collection($variable:tuwariLexicon)/lift/entry)
-		let $nstem := count(collection($variable:tuwariLexicon)/lift/entry[trait[@name="morph-type"]/@value = "stem"])
-		let $nsuffix := count(collection($variable:tuwariLexicon)/lift/entry[trait[@name="morph-type"]/@value = "suffix"])
-		let $nprefix := count(collection($variable:tuwariLexicon)/lift/entry[trait[@name="morph-type"]/@value = "prefix"])
+	    let $ntexts := count(collection($variable:TextsDataBaseName)/document/interlinear-text)
+	    let $nmorphems := count(collection($variable:TextsDataBaseName)/document/interlinear-text/paragraphs/paragraph/phrases/word/words/word/morphemes/morph)
+		let $nwords := count(collection($variable:TextsDataBaseName)/document/interlinear-text/paragraphs/paragraph/phrases/word/words/word)
+		let $nlexem := count(collection($variable:LexiconDataBaseName)/lift/entry)
+		let $nstem := count(collection($variable:LexiconDataBaseName)/lift/entry[trait[@name="morph-type"]/@value = "stem"])
+		let $nsuffix := count(collection($variable:LexiconDataBaseName)/lift/entry[trait[@name="morph-type"]/@value = "suffix"])
+		let $nprefix := count(collection($variable:LexiconDataBaseName)/lift/entry[trait[@name="morph-type"]/@value = "prefix"])
 		return
 <html:div>
     <html:h2>Tuwari documentation: statistics</html:h2>
@@ -695,7 +687,7 @@ declare
 	  <html:h4>Morphem types:</html:h4>
 	<html:table>
 	{
-	for $morphtype in collection($variable:tuwariLexicon)/lift/entry/trait[@name="morph-type"]/@value
+	for $morphtype in collection($variable:LexiconDataBaseName)/lift/entry/trait[@name="morph-type"]/@value
 	let $distinct := $morphtype
 	group by $distinct
 	order by count($morphtype) descending
@@ -706,7 +698,7 @@ declare
 	  <html:h4>POS:</html:h4>
 	<html:table>
 	{
-	for $pos in collection($variable:tuwariLexicon)/lift/entry/sense[1]/grammatical-info/@value
+	for $pos in collection($variable:LexiconDataBaseName)/lift/entry/sense[1]/grammatical-info/@value
 	let $distinct := $pos
 	group by $distinct
 	order by count($pos) descending
@@ -755,7 +747,7 @@ declare
 			<html:h2>Word form: <html:i>{$form}</html:i> ({$pos})</html:h2>
 			<html:hr />
 			{
-				for $analyse in page:distinct-deep(collection($variable:tuwariTexts)/document/interlinear-text/paragraphs/paragraph/phrases/word/words/word
+				for $analyse in page:distinct-deep(collection($variable:TextsDataBaseName)/document/interlinear-text/paragraphs/paragraph/phrases/word/words/word
 							[
 							item[@type='txt' and  @lang='tww']/text() = $form
 							and

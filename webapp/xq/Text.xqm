@@ -1,3 +1,11 @@
+(:-
+ : Rest4IGT
+ :
+ : Public domain
+ : Sylvain Loiseau
+ : <sylvain.loiseau@univ-paris13.fr>
+ :)
+
 module namespace text = 'http://basex.org/modules/text';
 
 import module namespace variable = "configuration" at "variable.xqm";
@@ -51,7 +59,7 @@ declare
     <body>
 	 { page:make-header-html() }
 	 <h3>Texts</h3>
-	 <p>{count(collection($variable:tuwariTexts)/document/interlinear-text)} texts found</p>
+	 <p>{count(collection($variable:TextsDataBaseName)/document/interlinear-text)} texts found</p>
 
 	 <table class="display" id="table">
 	   <thead>
@@ -70,7 +78,7 @@ declare
 		</tfoot>
 		<tbody>
 		{
-		for $text in collection($variable:tuwariTexts)/document/interlinear-text
+		for $text in collection($variable:TextsDataBaseName)/document/interlinear-text
 		return
 		<tr>
 		<td>
@@ -110,7 +118,7 @@ declare
 	<html:html xmlns:html="http://www.w3.org/1999/xhtml">
 		{
 		let $text := 
-collection($variable:tuwariTexts)/document/interlinear-text[item[@type = 'title-abbreviation'] = $id]
+collection($variable:TextsDataBaseName)/document/interlinear-text[item[@type = 'title-abbreviation'] = $id]
 		return (
 			<html:head>
 			<html:title>Text: {$id}, {$text/item[@type = 'title']}</html:title>

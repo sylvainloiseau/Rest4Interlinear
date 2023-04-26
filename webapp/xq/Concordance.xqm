@@ -1,3 +1,10 @@
+(:-
+ : Rest4IGT
+ :
+ : Public domain
+ : Sylvain Loiseau
+ : <sylvain.loiseau@univ-paris13.fr>
+ :)
 xquery version "3.0";
 module namespace concordance = 'http://basex.org/modules/concordance';
 
@@ -47,7 +54,7 @@ declare
         </html:div>
 		<html:hr />
 		{
-		let $morphs := collection($variable:tuwariTexts)/document/interlinear-text/paragraphs/paragraph/phrases/word/words/word/morphemes/morph
+		let $morphs := collection($variable:TextsDataBaseName)/document/interlinear-text/paragraphs/paragraph/phrases/word/words/word/morphemes/morph
 		    [
 				item[@type="cf"] = "-ne"
 				and
@@ -216,7 +223,7 @@ declare
 		$left_context_size as xs:integer,
 		$right_context_size as xs:integer
   ) as element(Q{http://www.w3.org/1999/xhtml}table) {
-	let $morphs := collection($variable:tuwariTexts)/document/interlinear-text/paragraphs/paragraph/phrases/word/words/word/morphemes/morph[
+	let $morphs := collection($variable:TextsDataBaseName)/document/interlinear-text/paragraphs/paragraph/phrases/word/words/word/morphemes/morph[
 				item[@type="cf"] = $lexem and (not(item[@type="hn"]) or item[@type="hn"] = $homonym_index )
 	]
 	return concordance:concordance-for-morphs($morphs, $left_context_size, $right_context_size)
@@ -231,7 +238,7 @@ declare
   	    $lexem as xs:string,
 		$homonym_index as xs:string
   ) as element(Q{http://www.w3.org/1999/xhtml}table) {
-	let $morphs := collection($variable:tuwariTexts)/document/interlinear-text/paragraphs/paragraph/phrases/word/words/word/morphemes/morph[
+	let $morphs := collection($variable:TextsDataBaseName)/document/interlinear-text/paragraphs/paragraph/phrases/word/words/word/morphemes/morph[
 				item[@type="cf"] = $lexem and (not(item[@type="hn"]) or item[@type="hn"] = $homonym_index )
 	]
 	return concordance:concordance-for-morphs($morphs, -1, -1)

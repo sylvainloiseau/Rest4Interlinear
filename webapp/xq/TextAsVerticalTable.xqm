@@ -1,3 +1,10 @@
+(:-
+ : Rest4IGT
+ :
+ : Public domain
+ : Sylvain Loiseau
+ : <sylvain.loiseau@univ-paris13.fr>
+ :)
 
 module namespace vert-page = 'http://basex.org/modules/web-page-vertical';
 
@@ -55,7 +62,7 @@ border: 1px solid #ccc;
           <html:body>
           {
 		  page:make-header(),
-		  let $text := collection($variable:tuwariTexts)/document/interlinear-text[item[@type = 'title-abbreviation'] = $id]
+		  let $text := collection($variable:TextsDataBaseName)/document/interlinear-text[item[@type = 'title-abbreviation'] = $id]
 		  return 
 		  <html:div>
 

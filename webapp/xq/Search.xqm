@@ -1,3 +1,11 @@
+(:-
+ : Rest4IGT
+ :
+ : Public domain
+ : Sylvain Loiseau
+ : <sylvain.loiseau@univ-paris13.fr>
+ :)
+
 module namespace search = 'http://basex.org/modules/search';
 
 import module namespace page = "http://basex.org/modules/web-page" at "site.xqm";

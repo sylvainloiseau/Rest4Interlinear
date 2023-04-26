@@ -1,3 +1,10 @@
+(:-
+ : Rest4IGT
+ :
+ : Public domain
+ : Sylvain Loiseau
+ : <sylvain.loiseau@univ-paris13.fr>
+ :)
 
 module namespace lexicon = 'http://basex.org/modules/lexicon';
 
@@ -7,7 +14,7 @@ import module namespace concordance = "http://basex.org/modules/concordance" at 
 import module namespace interlinear = "http://basex.org/modules/interlinear" at "Interlinear.xqm";
 
 declare variable $lexicon:lexiconId2FormOrder := map:merge(
-	for $entry in collection($variable:tuwariLexicon)/lift/entry
+	for $entry in collection($variable:LexiconDataBaseName)/lift/entry
 	return map:entry(
 		data($entry/@id),
 		[$entry/lexical-unit/form/text, data($entry/@order)]
@@ -15,7 +22,7 @@ declare variable $lexicon:lexiconId2FormOrder := map:merge(
 	);
 
 declare variable $lexicon:lexiconFormOrder2id := map:merge(
-	for $entry in collection($variable:tuwariLexicon)/lift/entry
+	for $entry in collection($variable:LexiconDataBaseName)/lift/entry
 	let $order := if (data($entry/@order)) then data($entry/@order) else "0"
 	return
 	map:entry(
@@ -27,16 +34,16 @@ declare variable $lexicon:lexiconFormOrder2id := map:merge(
 	(:TODO : pas très élégant pour gérer la présence ou l'absence de @order :)
 (:
 declare variable $page:entry2frequency := map:merge(
-	for $entry in collection($variable:tuwariLexicon)/lift/entry
+	for $entry in collection($variable:LexiconDataBaseName)/lift/entry
 	let $form := $entry/lexical-unit/form/text/text()
 	let $order := if (data($entry/@order)) then data($entry/@order) else "0"
  	return map:entry (
 		concat($form, $order),
 		if (data($entry/@order)) then
-		count(collection($variable:tuwariTexts)//morph[
+		count(collection($variable:TextsDataBaseName)//morph[
 			item[@type="cf"] = $form and item[@type="hn"] = $order
 		])
-		else count(collection($variable:tuwariTexts)//morph[
+		else count(collection($variable:TextsDataBaseName)//morph[
 			item[@type="cf"] = $form
 		])
 	)
@@ -66,10 +73,10 @@ declare
 		<html:html xmlns:html="http://www.w3.org/1999/xhtml">
 		<html:head>
 		<html:link rel="stylesheet" type="text/css" href="{$variable:cssdir}/style.css"/>
-		<html:title>Lexicon entry: {collection($variable:tuwariLexicon)/lift/entry[@id = $entryid]/lexical-unit/form/text/text()}</html:title>
+		<html:title>Lexicon entry: {collection($variable:LexiconDataBaseName)/lift/entry[@id = $entryid]/lexical-unit/form/text/text()}</html:title>
 		</html:head>
 		{
-			let $entry := collection($variable:tuwariLexicon)/lift/entry[@id = $entryid]
+			let $entry := collection($variable:LexiconDataBaseName)/lift/entry[@id = $entryid]
 			let $form := $entry/lexical-unit/form/text/text()
 			let $order := if ($entry/@order) then data($entry/@order) else "0"
 			let $mt := data($entry/trait[@name="morph-type"]/@value)
@@ -118,8 +125,8 @@ declare
 				(:map:get($page:entry2frequency, concat($entry/lexical-unit/form/text, data($entry/@order))):)
 
 				if (data($entry/@order)) then
-				count(collection($variable:tuwariTexts)//morph[item[@type=cf] = $form and item[@type="hn"] = $order ])
-				else count(collection($variable:tuwariTexts)//morph[item[@type="cf"] = $form ])				
+				count(collection($variable:TextsDataBaseName)//morph[item[@type=cf] = $form and item[@type="hn"] = $order ])
+				else count(collection($variable:TextsDataBaseName)//morph[item[@type="cf"] = $form ])				
 
 				}
 
@@ -199,7 +206,7 @@ declare
 
 	<p>
 		{
-			count(collection($variable:tuwariLexicon)/lift/entry)
+			count(collection($variable:LexiconDataBaseName)/lift/entry)
 		}
 		entries found
 	</p>
@@ -235,7 +242,7 @@ declare
 		</tfoot>
 		<tbody>
 		{
-		for $entry in collection($variable:tuwariLexicon)/lift/entry
+		for $entry in collection($variable:LexiconDataBaseName)/lift/entry
 			let $form := $entry/lexical-unit/form/text
 			let $order := if (data($entry/@order)) then data($entry/@order) else "0"
 			let $morphtype := data($entry/trait/@value)
