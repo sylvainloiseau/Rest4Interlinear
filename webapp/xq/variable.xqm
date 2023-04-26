@@ -12,7 +12,11 @@ declare variable $common:tuwariLexicon := 'TuwariLexicon20220613';
 declare variable $common:tuwariTexts := 'TuwariInterlinear20220613';
 
 
+(:
 declare variable $common:jquery := 'https://code.jquery.com/jquery-1.12.4.min.js';
+:)
+declare variable $common:jquery := 'https://code.jquery.com/jquery-3.6.1.min.js';
+
 declare variable $common:datatable := 'https://cdn.datatables.net/1.10.22/js/jquery.dataTables.js';
 declare variable $common:yadcf := 'https://cdnjs.cloudflare.com/ajax/libs/yadcf/0.9.4/jquery.dataTables.yadcf.min.js';
 declare variable $common:jsdir := '../static/js';

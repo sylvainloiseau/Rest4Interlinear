@@ -105,7 +105,7 @@ declare function interlinear:view-words
 ($words as element(words))
 as element(Q{http://www.w3.org/1999/xhtml}table)
 {
-	<html:table class="words" xmlns:html="http://www.w3.org/1999/xhtml">	
+	<html:table class="interlinear_words" xmlns:html="http://www.w3.org/1999/xhtml">	
 	<html:tr>
 	{
 		for $word in $words/word
@@ -116,7 +116,7 @@ as element(Q{http://www.w3.org/1999/xhtml}table)
 		let $pos := $word/item[@type='pos' and @lang='en']/text()
 		let $pos_checked := if (empty($pos)) then "&#160;" else $pos
 		return
-		<html:td class="word">
+		<html:td class="interlinear_word">
 		{
 			if ($word/morphemes) then interlinear:view-morphemes($word/morphemes, fn:false())
 			else if ($word[item[@type="punct"]]) then $word/item[@type="punct"]/text()
@@ -129,15 +129,15 @@ as element(Q{http://www.w3.org/1999/xhtml}table)
 };
 
 (:~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
- : view-morphemes -- draw a cell for each morphems of a word
+ : view-morphemes -- display the morphemes of a word according to IGT conventions as a three line table
  :
  : @param a table element
- : @return Q{http://www.w3.org/1999/xhtml}tr
+ : @return Q{http://www.w3.org/1999/xhtml}table
  :)
 declare function interlinear:view-morphemes($morphemes as element(morphemes), $edit as xs:boolean)
 as element(Q{http://www.w3.org/1999/xhtml}table)
 {
-	<html:table border="1" xmlns:html="http://www.w3.org/1999/xhtml" class="morphemes">
+	<html:table border="0" xmlns:html="http://www.w3.org/1999/xhtml" class="interlinear_morphemes">
 	<html:tr>
 	<html:td class="morph_txt">
 	{
@@ -147,7 +147,7 @@ as element(Q{http://www.w3.org/1999/xhtml}table)
 	</html:td>
 	</html:tr>
 	<html:tr>
-	<html:td class="morph_citation">{
+	<html:td class="morph_cf">{
 		for $morph in $morphemes/morph
 		let $form := $morph/item[@type='txt' and @lang='tww']/text()
 		(:TODO : la forme canonique ici doit être mise:)
@@ -163,7 +163,7 @@ as element(Q{http://www.w3.org/1999/xhtml}table)
 		let $glosses := $morphemes/morph/item[@type='gls' and @lang='en']/text()
 		for $gloss in $glosses
 		return (
-		   if (matches($gloss, '^[-A-Z0-9_\.\?]+$')) then <span class="gram">{lower-case(data($gloss))}</span> else <span class="lex">{$gloss}</span>
+		   if (matches($gloss, '^[-A-Z0-9_:\.\?]+$')) then <span class="gram">{lower-case(data($gloss))}</span> else <span class="lex">{$gloss}</span>
 		)
 		(:return string-join($glosses, "&#160;"):)
 	}
