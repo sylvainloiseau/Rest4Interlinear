@@ -60,7 +60,6 @@ declare
 	 { page:make-header-html() }
 	 <h3>Texts</h3>
 	 <p>{count(collection($variable:TextsDataBaseName)/document/interlinear-text)} texts found</p>
-
 	 <table class="display" id="table">
 	   <thead>
 		<tr>

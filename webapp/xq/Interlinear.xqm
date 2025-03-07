@@ -158,7 +158,7 @@ as element(Q{http://www.w3.org/1999/xhtml}table)
 		let $form := $morph/item[@type='txt' and @lang='tww']/text()
 		(:TODO : la forme canonique ici doit être mise:)
 		let $cf := $morph/item[@type='cf' and @lang='tww']/text() 
-		let $cf_or_form := if ($cf) then $cf else $form
+		let $cf_or_form := if ($cf) then $cf else if ($form) then $form else "---"
 		let $order := if ($morph/item[@type="hn"]/text()) then $morph/item[@type="hn"]/text() else "0"
 		return page:display-form($cf_or_form, $order)
 	}</html:td>

@@ -14,8 +14,14 @@ module namespace common = 'configuration';
 - TextsDataBaseName should be a dictionary encoded with the Emeld XML vocabulary
 
 :)
+(:
 declare variable $common:LexiconDataBaseName := 'TuwariLexicon20220613';
 declare variable $common:TextsDataBaseName := 'TuwariInterlinear20220613';
+declare variable $common:LexiconDataBaseName := 'LIFT20230711';
+declare variable $common:TextsDataBaseName := 'INTERLINEAR20230711';
+:)
+declare variable $common:LexiconDataBaseName := 'Tuwari20241011Lift';
+declare variable $common:TextsDataBaseName := 'Tuwari20241011Interlinear';
 declare variable $common:title := 'Corpus and lexicon';
 
 
